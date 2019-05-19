@@ -1,0 +1,7 @@
+#card{
+    width: 15rem;
+    float: left;
+}
+#imagen_de_perfil{
+    max-height: 2rem;
+}

@@ -1,14 +1,17 @@
 const Usuarios = require('../models/usuario');
 const usuarioCtrl = {};
 
-usuarioCtrl.getUsuarios = async (req, res) => {
-        //res.send('Usuarios!!');
-        //res.json({status: 'Usuarios.'});
-        const usuarios = await Usuarios.find()
-        res.json(usuarios);
+usuarioCtrl.obtenerUsuarios = async (req, res) => {
+    const usuarios = await Usuarios.find()
+    res.json(usuarios);
 }
 
-usuarioCtrl.createUsuario = async (req, res) => {
+usuarioCtrl.obtenerUsuario = async (req, res) => {
+    const usuario = await Usuarios.findById(req.params.id);
+    res.json(usuario);
+}
+
+usuarioCtrl.crearUsuario = async (req, res) => {
     const usuario = new Usuarios(req.body);
     await usuario.save();
     console.log(usuario);
@@ -17,14 +20,10 @@ usuarioCtrl.createUsuario = async (req, res) => {
     });
 }
 
-usuarioCtrl.getUsuario = async (req, res) => {
-    const usuario = await Usuarios.findById(req.params.id);
-    res.json(usuario);
-}
-
-usuarioCtrl.editUsuario = async (req, res) => {
+usuarioCtrl.editarUsuario = async (req, res) => {
     const { id } = req.params;
     const usuario = {
+        nick: req.body.nick,
         nombre: req.body.nombre,
         apellidos: req.body.apellidos,
         edad: req.body.edad
@@ -35,7 +34,7 @@ usuarioCtrl.editUsuario = async (req, res) => {
     });
 }
 
-usuarioCtrl.deleteUsuario = async (req, res) => {
+usuarioCtrl.borrarUsuario = async (req, res) => {
     await Usuarios.findByIdAndRemove(req.params.id)
     res.json({
         status: 'Usuario eliminado.'

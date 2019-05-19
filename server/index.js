@@ -1,21 +1,22 @@
+// requerimientos.
 const express = require('express');
 const morgan = require('morgan');
 const app = express();
-
+const cors = require('cors');
 const { mongoose } = require('./database');
 
-// Settings
+// Configuración.
 app.set('port', process.env.PORT || 3000);
 
-// Middlewares
+// Middlewares.
 app.use(morgan('dev'));
 app.use(express.json());
+app.use(cors({origin: 'http://localhost:4200'}));
 
-// Routes
+// Rutas.
 app.use(require('./routes/routes'));
 
-// Starting the server
-
+// Arrancar el servidor.
 app.listen(
     app.get('port'),
     () => {

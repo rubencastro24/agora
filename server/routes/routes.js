@@ -3,10 +3,10 @@ const router = express.Router();
 
 const usuario = require('../controllers/usuario.controlador')
 
-router.get('/usuarios', usuario.getUsuarios);
-router.post('/usuarios', usuario.createUsuario);
-router.get('/usuarios/:id', usuario.getUsuario);
-router.put('/usuarios/:id', usuario.editUsuario);
-router.delete('/usuarios/:id', usuario.deleteUsuario);
+router.get('/api/usuarios', usuario.obtenerUsuarios);
+router.get('/api/usuarios/:id', usuario.obtenerUsuario);
+router.post('/api/usuarios', usuario.crearUsuario);
+router.put('/api/usuarios/:id', usuario.editarUsuario);
+router.delete('/api/usuarios/:id', usuario.borrarUsuario);
 
 module.exports = router;
