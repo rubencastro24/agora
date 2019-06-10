@@ -12,19 +12,28 @@ export class UsuariosComponent implements OnInit{
 
   usuarios : any[] = [];
 
-  constructor(public usuariosServicio: UsuariosService) {
-    
-  }
+  constructor(public usuariosS: UsuariosService) { }
 
   ngOnInit() {
     this.obtenerUsuarios();
   }
 
   obtenerUsuarios() {
-    this.usuariosServicio.obtenerUsuarios()
-      .subscribe(res => {
-        this.usuariosServicio.usuarios = res as Usuarios[];
-      });
+    this.usuariosS.obtenerUsuarios()
+      .subscribe(
+        respuesta => {
+          var resultado : any = respuesta;
+          if (resultado.type == true){
+            this.usuariosS.usuarios = resultado.usuarios as Usuarios[];
+          }
+          else {
+            console.log("no se encuentran usuarios.");
+          }
+        },
+        error => {
+          console.log(error);
+        }
+      );
   }
 
 }

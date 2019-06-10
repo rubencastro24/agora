@@ -1,0 +1,101 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md-6 mb-3">
+      <div class="d-flex justify-content-center">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="text-primary text-center">Iniciar sesion</h4>
+          </div>
+          <div class="card-body">
+            <form (ngSubmit)="iniciarSesion()">
+
+              <div class="input-group form-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fas fa-user"></i></span>
+                </div>
+                <input type="text" name="nick" placeholder="Nick:" class="form-control" [(ngModel)]="nick" autocomplete="nickname" required="required" />
+              </div>
+
+              <div class="input-group form-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fas fa-key"></i></span>
+                </div>
+                <input type="password" name="pass" placeholder="Contraseña:" class="form-control" [(ngModel)]="pass" autocomplete="current-password" required="required" />
+              </div>
+
+              <div class="input-group form-group">
+                  <span class="input-group-text"><i class="fas fa-sign-in-alt"></i></span>
+                  <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit">Iniciar sesion</button>
+                  </div>
+              </div>
+
+            </form>
+          </div>
+          <div *ngIf="errorI" class="card-footer">
+            <h4 class="text-danger text-center">{{errorI}}</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-6 mb-3">
+      <div class="d-flex justify-content-center">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="text-success text-center">Registrarse</h4>
+          </div>
+          <div class="card-body">
+            <form (ngSubmit)="registrar()">
+
+              <div class="input-group form-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+                </div>
+                <input type="text" name="nombre" placeholder="nombre:" class="form-control" [(ngModel)]="nombre" autocomplete="name" required="required" />
+              </div>
+
+              <div class="input-group form-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+                </div>
+                <input type="text" name="apellidos" placeholder="apellidos:" class="form-control" [(ngModel)]="apellidos" autocomplete="additional-name" required="required" />
+              </div>
+
+              <div class="input-group form-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fas fa-user"></i></span>
+                </div>
+                <input type="text" name="nick" placeholder="Nick/Nombre de usuario:" class="form-control" [(ngModel)]="nickR" autocomplete="nickname" required="required" />
+              </div>
+
+              <div class="input-group form-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fas fa-key"></i></span>
+                </div>
+                <input type="password" name="pass" placeholder="Contraseña:" class="form-control" [(ngModel)]="passR" autocomplete="family-name" required="required" />
+              </div>
+
+              <div class="input-group form-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fas fa-birthday-cake"></i></span>
+                </div>
+                <input type="date" name="fecha" class="form-control" [(ngModel)]="fecha" autocomplete="bday" required="required" />
+              </div>
+
+              <div class="input-group form-group">
+                <span class="input-group-text"><i class="fas fa-sign-in-alt"></i></span>
+                <div class="input-group-append">
+                  <button class="btn btn-success" type="submit">Registrarse</button>
+                </div>
+              </div>
+
+            </form>
+          </div>
+          <div *ngIf="errorR" class="card-footer">
+            <h4 class="text-danger text-center">{{errorR}}</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

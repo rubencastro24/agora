@@ -1,0 +1,29 @@
+<div class="container">
+    <div class="row">
+      <div class="col-12">
+  
+        <div id="card" class="card text-white bg-success">
+
+          <div class="card-header">
+            <div class="row">
+              <div class="col-2">
+                <img id="imagen_de_perfil" class="img-fluid rounded-circle mr-3" [src]="'assets/fotoPerfil/' + usuarioS.usuarios._id + '.jpg'" />
+              </div>
+              <div class="col-10">
+                <p class="text-white text-center">
+                  {{usuarioS.usuarios.nick}}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <h5 class="card-title">{{usuarioS.usuarios.nombre + " " + usuarioS.usuarios.apellidos}}</h5>
+            <p class="card-text">{{usuarioS.usuarios.descripcion}}</p>
+          </div>
+
+        </div>
+  
+      </div>
+    </div>
+  </div>

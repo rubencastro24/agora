@@ -1,5 +1,10 @@
 #card{
+    /*
+    min-width: 10rem;
+    max-width: 20rem;
+    */
     width: 15rem;
+    height: 10rem;
     float: left;
 }
 #imagen_de_perfil{

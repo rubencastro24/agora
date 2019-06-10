@@ -1,7 +1,10 @@
 export class Usuarios {
     _id: string;
     nick: string;
+    pass: String;
     nombre: string;
     apellidos: string;
-    edad: number;
+    descripción: string;
+    fechaNacimiento: Date;
+    fechaCreacionUsuario: Date;
 }

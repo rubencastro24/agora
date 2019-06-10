@@ -1,0 +1,8 @@
+.cuatro-cero-cuatro-bg{
+    background-image: url(./404.gif);
+    height: 404px;
+    background-position: center;
+}
+.texto-404{
+    margin-top:-90px;
+}
