@@ -1,4 +1,16 @@
-#logo {
+.logo-1 {
+    max-height: 1rem;
+    max-width: 1rem;
+}
+.logo-2 {
+    max-height: 2rem;
+    max-width: 2rem;
+}
+.logo-3 {
     max-height: 3rem;
     max-width: 3rem;
+}
+.perfil {
+    max-height: 26px;
+    max-width: 26px;
 }

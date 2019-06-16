@@ -25,7 +25,6 @@ usuarioControlador.obtenerUsuarios = async (req, res) => {
                         type: true,
                         usuarios
                     });
-                    /* res.json(usuarios); */
                 }
             }
         })
@@ -167,6 +166,7 @@ usuarioControlador.borrarUsuario = async (req, res) => {
 
 
 usuarioControlador.iniciarSesion = async (req, res) => {
+    req.body.nick = req.body.nick.toLowerCase();
     const usuarioIniciarSesion = {
         nick: req.body.nick,
         pass: req.body.pass
@@ -198,6 +198,7 @@ usuarioControlador.iniciarSesion = async (req, res) => {
 }
 
 usuarioControlador.registrarse = async (req, res) => {
+    req.body.nick = req.body.nick.toLowerCase();
     await UsuariosModelo.findOne({ "nick": req.body.nick }, function(err, usuarioEncontrado) {
         if (err) {
             res.json({
@@ -238,7 +239,7 @@ usuarioControlador.registrarse = async (req, res) => {
 usuarioControlador.comprobarToken = async (req, res, next) => {
     const token = req.body.token || req.query.token || req.headers['x-access-token'];
     if (token) {
-        jwt.verify(token, jwtSecret, (err, decoded) => {
+        jwt.verify(token, jwtSecret, (err, tokenDescodificado) => {
             if (err) {
                 res.status(401).json({
                     type: false,
@@ -246,7 +247,7 @@ usuarioControlador.comprobarToken = async (req, res, next) => {
                 });
             }
             else {
-                req.decoded = decoded;
+                req.tokenDescodificado = tokenDescodificado;
                 next();
             }
         });
@@ -271,7 +272,7 @@ usuarioControlador.getComprobarToken = async (req, res, next) => {
                 });
             }
             else {
-                /* req.tokenDescodificado = tokenDescodificado; */
+                req.tokenDescodificado = tokenDescodificado;
                 if (!tokenDescodificado){
                     res.json({
                         type: false,

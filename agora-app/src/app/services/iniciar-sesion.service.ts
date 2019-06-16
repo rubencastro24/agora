@@ -6,14 +6,17 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable()
 export class IniciarSesionService {
+  readonly URL_API = 'http://localhost:80';
+  public token : string;
+
   constructor(
     public http: HttpClient,
     public jwtHelper: JwtHelperService
-  ) { }
-  readonly URL_API = 'http://localhost:80';
-  public token : string = localStorage.getItem('token');
-  
-  miId(){
+  ) {
+    this.token = localStorage.getItem('token');
+  }
+
+  public miId(){
     if (this.token) {
       var valoresToken : any = this.jwtHelper.decodeToken(this.token);
       return valoresToken.idUsuario
@@ -52,10 +55,10 @@ export class IniciarSesionService {
   }
 
   public get sesionIniciada(): boolean {
+    this.token = localStorage.getItem('token');
     if (this.token){
       return true
     }
     return false
-    //return (localStorage.getItem('token') !== "null" && localStorage.getItem('token') !== "undefined");
   }
 }

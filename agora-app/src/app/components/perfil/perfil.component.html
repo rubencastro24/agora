@@ -1,29 +1,47 @@
 <div class="container">
-    <div class="row">
-      <div class="col-12">
-  
-        <div id="card" class="card text-white bg-success">
+  <div class="row">
+    <div class="col-12">
 
-          <div class="card-header">
-            <div class="row">
-              <div class="col-2">
-                <img id="imagen_de_perfil" class="img-fluid rounded-circle mr-3" [src]="'assets/fotoPerfil/' + usuarioS.usuarios._id + '.jpg'" />
+      <div id="card" class="card text-white bg-success">
+
+        <div class="card-header">
+          <div class="row">
+            <div class="col-3">
+              <img id="imagen_de_perfil" class="img-fluid rounded-circle mr-3" [src]="'assets/fotoPerfil/' + id + '.jpg'" alt="Foto de perfil" />
+            </div>
+            <div class="col-9">
+              <p class="text-white text-center">@{{usuario.nick}}</p>
+              <div class="row justify-content-center">
+                <div class="col-12">
+                  <button class="btn btn-success ml-auto mr-auto">X publicaciones</button>
+                  <button class="btn btn-success ml-auto mr-auto">{{seguidoresCantidad}} seguidores</button>
+                  <button class="btn btn-success ml-auto mr-auto">{{seguimientosCantidad}} seguimientos</button>
+                </div>
               </div>
-              <div class="col-10">
-                <p class="text-white text-center">
-                  {{usuarioS.usuarios.nick}}
-                </p>
+              <div *ngIf="id !== miId" class="row justify-content-center">
+                <div class="col-12">
+                  <span *ngIf="seguidor === true" class="text-white">Te sigue</span>
+                  <span *ngIf="seguidor === false" class="text-white">No te sigue</span>
+                  <span class="text-white">, </span>
+                  <span *ngIf="seguimiento === true" class="text-white">Le sigues</span>
+                  <span *ngIf="seguimiento === false" class="text-white">No le sigues</span>
+                  <form (ngSubmit)="cambiarSeguimientoPerfil()" class="form-inline">
+                    <button *ngIf="seguimiento === true" class="btn btn-danger">Dejar de seguir</button>
+                    <button *ngIf="seguimiento === false" class="btn btn-primary">Seguir</button>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
-
-          <div class="card-body">
-            <h5 class="card-title">{{usuarioS.usuarios.nombre + " " + usuarioS.usuarios.apellidos}}</h5>
-            <p class="card-text">{{usuarioS.usuarios.descripcion}}</p>
-          </div>
-
         </div>
-  
+
+        <div class="card-body">
+          <h5 class="card-title">{{usuario.nombre + " " + usuario.apellidos}}</h5>
+          <p class="card-text">{{usuario.descripcion}}</p>
+        </div>
+
       </div>
+
     </div>
   </div>
+</div>

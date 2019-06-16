@@ -35,7 +35,8 @@ export class IniciarSesionComponent implements OnInit{
   ) { }
 
   public iniciarSesion() {
-    this.sesion.iniciarSesion(this.nick, this.pass)
+    if (this.nick && this.pass){
+      this.sesion.iniciarSesion(this.nick, this.pass)
       .pipe(first())
       .subscribe(
         resultado => {
@@ -49,7 +50,11 @@ export class IniciarSesionComponent implements OnInit{
         error => {
           this.errorI = 'Error de autenticación. ' + error;
         }
-      );
+        );
+    }
+    else {
+      this.errorI = 'Introduce todos los datos'
+    }
   }
 
   calcularEdad(){
@@ -60,8 +65,8 @@ export class IniciarSesionComponent implements OnInit{
       año: fechaSeparada[0]
     };
     var fechaHoy : Date = new Date();
-    if ( fechaHoy.getMonth() > this.fechaCumple.mes ||
-      fechaHoy.getMonth() == this.fechaCumple.mes && fechaHoy.getDate() >= this.fechaCumple.dia ){
+    if ( (fechaHoy.getMonth()+1 > this.fechaCumple.mes) ||
+      (fechaHoy.getMonth()+1 == this.fechaCumple.mes && fechaHoy.getDate() >= this.fechaCumple.dia) ){
       this.edad = fechaHoy.getFullYear() - this.fechaCumple.año;
     }
     else{
@@ -70,30 +75,33 @@ export class IniciarSesionComponent implements OnInit{
   }
 
   public registrar() {
-    this.calcularEdad();
-    console.log(this.edad);
-    if (this.edad >= this.limiteEdad){
-      console.log(this.edad);
-      let nick = this.nickR;
-      let pass = this.passR;
+    if (this.nombre && this.apellidos && this.nickR && this.passR && this.fecha) {  
+      this.calcularEdad();
+      if (this.edad >= this.limiteEdad){
+        let nick = this.nickR;
+        let pass = this.passR;
 
-      this.sesion.registrarse(this.nombre, this.apellidos, nick, pass, this.fechaCumple)
-      .subscribe(
-        resultado => {
-          if (resultado == true){
-            this.router.navigate(['']);
+        this.sesion.registrarse(this.nombre, this.apellidos, nick, pass, this.fechaCumple)
+        .subscribe(
+          resultado => {
+            if (resultado == true){
+              this.router.navigate(['']);
+            }
+            else {
+              this.errorR = 'El usuario ya existe.';
+            }
+          },
+          error => {
+            this.errorR = `Error de registro. ${error}`;
           }
-          else {
-            this.errorR = 'El usuario ya existe.';
-          }
-        },
-        error => {
-          this.errorR = 'Error de registro. ' + error;
-        }
-        );
+          );
+      }
+      else {
+        this.errorR = `Debes de ser mayor de ${this.limiteEdad} años.`;
+      }
     }
     else {
-      this.errorR = `Debes de ser mayor de ${this.limiteEdad} años.`;
+      this.errorR = 'Introduce todos los datos'
     }
   }
 

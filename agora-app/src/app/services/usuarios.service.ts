@@ -9,26 +9,25 @@ import { CabecerasService } from '../services/cabeceras.service';
 
 export class UsuariosService {
 
-  /* seleccionarUsuario : Usuarios; */
   usuarios : Usuarios[];
-  busqueda : string;
   URL_API = 'http://localhost:80/api/usuarios'
 
-  constructor(private http : HttpClient, private cabecerasS: CabecerasService) {
-    /* this.seleccionarUsuario = new Usuarios(); */
-  }
+  constructor(
+    public http : HttpClient,
+    public cabecerasS: CabecerasService
+  ){ }
 
-  obtenerUsuarios() {
+  public obtenerUsuarios() {
     this.cabecerasS.setHeaders();
     return this.http.get(this.URL_API, this.cabecerasS.cabeceras);
   }
 
-  obtenerUsuariosBusqueda() {
+  public obtenerUsuariosBusqueda(nick: Usuarios['nick']) {
     this.cabecerasS.setHeaders();
-    return this.http.get(`${this.URL_API}/buscar/${this.busqueda}`, this.cabecerasS.cabeceras);
+    return this.http.get(`${this.URL_API}/buscar/${nick}`, this.cabecerasS.cabeceras);
   }
 
-  obtenerUsuario(id: Usuarios['_id']) {
+  public obtenerUsuario(id: Usuarios['_id']) {
     this.cabecerasS.setHeaders();
     return this.http.get(`${this.URL_API}/${id}`, this.cabecerasS.cabeceras);
   }
@@ -38,15 +37,15 @@ export class UsuariosService {
       return this.http.get(this.URL_API + `/${usuario.id}`, this.cabecerasS.cabeceras);
     } */
   
-  crearUsuario(usuario: Usuarios) {
+  public crearUsuario(usuario: Usuarios) {
     return this.http.post(this.URL_API, usuario/* , {headers: this.cabeceras} */);
   }
   
-  editarUsuario(usuario: Usuarios) {
+  public editarUsuario(usuario: Usuarios) {
     return this.http.put(this.URL_API + `/${usuario._id}`, usuario);
   }
   
-  borrarUsuario(usuario: Usuarios) {
+  public borrarUsuario(usuario: Usuarios) {
     return this.http.delete(this.URL_API + `/${usuario._id}`);
   }
 }

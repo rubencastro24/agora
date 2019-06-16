@@ -24,18 +24,6 @@ const UsuarioSchema = new Schema ({
         "año": 1999
     }
 }
-{
-    "nick": "mireyap22",
-    "pass": "1999",
-    "nombre": "Mireya",
-    "apellidos": "Peña Espinosa",
-    "descripcion": "",
-    "fechaNacimiento": {
-        "dia": 17,
-        "mes": 6,
-        "año": 1999
-    }
-}
     */
 
 module.exports = mongoose.model('Usuarios', UsuarioSchema);

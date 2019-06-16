@@ -3,7 +3,8 @@ const { Schema } = mongoose;
 
 const SeguimientosSchema = new Schema ({
     usuario: { type: Schema.Types.ObjectId, required: true},
-    sigue: { type: Schema.Types.ObjectId, required: true}
+    sigue: { type: Schema.Types.ObjectId, required: true},
+    fecha: { type: Schema.Types.Date, required: true}
 });
 
     /*  Usuario ejemplo

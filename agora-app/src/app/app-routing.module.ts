@@ -12,6 +12,7 @@ const routes: Routes = [
   { path: 'iniciar-sesion', component: IniciarSesionComponent },
 
   { path: 'usuarios', component: UsuariosComponent, canActivate: [IniciarSesionGuard] },
+  { path: 'usuarios/buscar/:nick', component: UsuariosComponent, canActivate: [IniciarSesionGuard] },
   { path: 'usuarios/:id', component: PerfilComponent, canActivate: [IniciarSesionGuard] },
   
   { path: '404', component: NoEncontradoComponent },
