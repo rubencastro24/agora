@@ -7,6 +7,7 @@ import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { NoEncontradoComponent } from './components/no-encontrado/no-encontrado.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { IniciarSesionComponent } from './components/iniciar-sesion/iniciar-sesion.component';
+import { PublicacionesComponent } from './components/publicaciones/publicaciones.component';
 
 const routes: Routes = [
   { path: 'iniciar-sesion', component: IniciarSesionComponent },
@@ -14,6 +15,9 @@ const routes: Routes = [
   { path: 'usuarios', component: UsuariosComponent, canActivate: [IniciarSesionGuard] },
   { path: 'usuarios/buscar/:nick', component: UsuariosComponent, canActivate: [IniciarSesionGuard] },
   { path: 'usuarios/:id', component: PerfilComponent, canActivate: [IniciarSesionGuard] },
+
+  { path: 'subir-publicacion', component: PublicacionesComponent, canActivate: [IniciarSesionGuard] },
+  { path: 'publicacion/:id', component: PublicacionesComponent, canActivate: [IniciarSesionGuard] },
   
   { path: '404', component: NoEncontradoComponent },
   { path: '', redirectTo: '', pathMatch: 'full', canActivate: [IniciarSesionGuard] },

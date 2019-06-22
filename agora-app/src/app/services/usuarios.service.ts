@@ -9,7 +9,6 @@ import { CabecerasService } from '../services/cabeceras.service';
 
 export class UsuariosService {
 
-  usuarios : Usuarios[];
   URL_API = 'http://localhost:80/api/usuarios'
 
   constructor(

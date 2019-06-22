@@ -2,7 +2,8 @@ const UsuariosModelo = require('../models/usuario');
 const SeguimientosModelo = require('../models/seguimientos');
 const seguimientosControlador = {};
 
-
+/* --------------------------------------------------------------------------------------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------------------------------------------------------------------------------------- */
 
 seguimientosControlador.cambiarSeguimiento = async (req, res) => {
     const seguimiento = {
@@ -80,16 +81,14 @@ seguimientosControlador.cambiarSeguimiento = async (req, res) => {
     });
 }
 
-
-
-
+/* --------------------------------------------------------------------------------------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------------------------------------------------------------------------------------- */
 
 seguimientosControlador.obtenerSeguimiento = async (req, res) => {
     buscarSeguimiento= {
         usuario: req.tokenDescodificado.idUsuario,
         sigue: req.params.id
     }
-    console.log(buscarSeguimiento)
     await SeguimientosModelo.findOne(
         buscarSeguimiento,
         (err, seguimiento) => {
@@ -119,16 +118,14 @@ seguimientosControlador.obtenerSeguimiento = async (req, res) => {
     );
 }
 
-
-
-
+/* --------------------------------------------------------------------------------------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------------------------------------------------------------------------------------- */
 
 seguimientosControlador.obtenerSeguidor = async (req, res) => {
     buscarSeguidor= {
         usuario: req.params.id,
         sigue: req.tokenDescodificado.idUsuario
     }
-    console.log(buscarSeguidor)
     await SeguimientosModelo.findOne(
         buscarSeguidor,
         (err, seguidor) => {
@@ -158,20 +155,19 @@ seguimientosControlador.obtenerSeguidor = async (req, res) => {
     );
 }
 
+/* --------------------------------------------------------------------------------------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------------------------------------------------------------------------------------- */
 
-
-
-seguimientosControlador.obtenerSeguimientos = async (req, res) => {
-    usuario = {
-        usuario: req.params.id
-    }
+seguimientosControlador.obtenerUsuariosSeguimientos = async (req, res) => {
     await SeguimientosModelo.find(
-        usuario,
+        {usuario: req.params.id},
+        {_id:0, sigue:1},
         (err, seguimientos) => {
-            if (err) {
+            if (err){
                 res.json({
                     type: false,
-                    data: "segumientos fallido: " + err
+                    seguimientos: false,
+                    data: "seguimientos fallidos: " + err
                 });
             }
             else {
@@ -183,33 +179,58 @@ seguimientosControlador.obtenerSeguimientos = async (req, res) => {
                     });
                 }
                 else {
-                    res.json({
-                        type: true,
-                        seguimientos: true,
-                        data: seguimientos
-                    });
+                    var seguimientosId = seguimientos.map(
+                        function(seguimientos) {
+                            return seguimientos.sigue
+                        },
+                    )
+                    UsuariosModelo.find(
+                        { _id: { $in : seguimientosId } },
+                        {nick:1},
+                        (err, usuarios) => {
+                            if (err) {
+                                res.json({
+                                    type: false,
+                                    data: "usuarios seguimientos fallidos: " + err
+                                });
+                            }
+                            else {
+                                if (!usuarios) {
+                                    res.json({
+                                        type: true,
+                                        seguimientos: false,
+                                        data: "usuarios seguimientos no encontrados."
+                                    });
+                                }
+                                else {
+                                    res.json({
+                                        type: true,
+                                        seguimientos: true,
+                                        data: usuarios
+                                    });
+                                }
+                            }
+                        }
+                    );
                 }
             }
         }
     );
 }
 
+/* --------------------------------------------------------------------------------------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------------------------------------------------------------------------------------- */
 
-
-
-
-seguimientosControlador.obtenerSeguidores = async (req, res) => {
-    usuario = {
-        sigue: req.params.id
-    }
+seguimientosControlador.obtenerUsuariosSeguidores = async (req, res) => {
     await SeguimientosModelo.find(
-        usuario,
-        {_id:0,usuario:1},
+        {sigue: req.params.id},
+        {_id:0, usuario:1},
         (err, seguidores) => {
-            if (err) {
+            if (err){
                 res.json({
                     type: false,
-                    data: "segumientos fallido: " + err
+                    seguidores: false,
+                    data: "seguidores fallidos: " + err
                 });
             }
             else {
@@ -221,89 +242,46 @@ seguimientosControlador.obtenerSeguidores = async (req, res) => {
                     });
                 }
                 else {
-                    res.json({
-                        type: true,
-                        seguidores: true,
-                        data: seguidores
-                    });
+                    var seguidoresId = seguidores.map(
+                        function(seguidores) {
+                            return seguidores.usuario
+                        },
+                    )
+                    UsuariosModelo.find(
+                        { _id: { $in : seguidoresId } },
+                        {nick:1},
+                        (err, usuarios) => {
+                            if (err) {
+                                res.json({
+                                    type: false,
+                                    data: "usuarios seguidores fallidos: " + err
+                                });
+                            }
+                            else {
+                                if (!usuarios) {
+                                    res.json({
+                                        type: true,
+                                        seguidores: false,
+                                        data: "usuarios seguidores no encontrados."
+                                    });
+                                }
+                                else {
+                                    res.json({
+                                        type: true,
+                                        seguidores: true,
+                                        data: usuarios
+                                    });
+                                }
+                            }
+                        }
+                    );
                 }
             }
         }
     );
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-seguimientosControlador.obtenerUsuariosSeguidores = async (req, res) => {
-    var seguidoresUsuariosObjeto = req.body;
-    
-    var seguidoresArray=[];
-    for (let i = 0; i < seguidoresUsuariosObjeto.length; i++) {
-        seguidoresArray.push(seguidoresUsuariosObjeto[i].usuario)
-    }
-
-    await UsuariosModelo.find(
-        { _id : { $in : seguidoresArray }},
-        { nick : 1 },
-        (err, usuarios) => {
-            if (err) {
-                res.json({
-                    type: false,
-                    data: "usuarios fallido: " + err
-                });
-            }
-            else {
-                if (!usuarios) {
-                    res.json({
-                        type: true,
-                        usuarios: false,
-                        data: "usuarios no encontrados."
-                    });
-                }
-                else {
-                    res.json({
-                        type: true,
-                        usuarios: true,
-                        data: usuarios
-                    });
-                }
-            }
-        }
-    );
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/* --------------------------------------------------------------------------------------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------------------------------------------------------------------------------------- */
 
 module.exports = seguimientosControlador;

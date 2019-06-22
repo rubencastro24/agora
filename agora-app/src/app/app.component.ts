@@ -8,6 +8,7 @@ import { IniciarSesionService } from "./services/iniciar-sesion.service";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
   constructor(
     private sesion: IniciarSesionService,
     private router: Router

@@ -1,0 +1,42 @@
+<div class="d-flex justify-content-center">
+  <div class="card">
+    <div class="card-header">
+      <h4 class="text-primary text-center">Hacer una publicación</h4>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="hacerPublicacion()" enctype="multipart/form-data">
+
+        <div class="input-group form-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"><i class="far fa-image"></i></span>
+          </div>
+          <div class="custom-file">
+            <input type="file" name="imagen" accept="image/png,image/jpeg,image/gif" class="custom-file-input" id="imagenPublicacion" (change)="onFileChange($event)" [(ngModel)]="imagen" (click)="mostrarNombreArchivo()">
+            <label class="custom-file-label" for="imagenPublicacion">Elige imagen:</label>
+          </div>
+        </div>
+
+        <div class="input-group form-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+          </div>
+          <textarea name="descripcion" placeholder="Descripción:" class="form-control" [(ngModel)]="descripcion"></textarea>
+        </div>
+
+        <div class="input-group form-group">
+          <span class="input-group-text"><i class="fas fa-upload"></i></span>
+          <div class="input-group-append">
+            <button class="btn btn-primary" type="submit">Subir publicación</button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+    <div *ngIf="error" class="card-footer">
+      <h4 class="text-danger text-center">{{error}}</h4>
+    </div>
+    <div *ngIf="respuesta" class="card-footer">
+      <h4 class="text-success text-center">{{respuesta}}</h4>
+    </div>
+  </div>
+</div>

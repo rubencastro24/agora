@@ -2,13 +2,13 @@
   <div class="row">
     <div class="col-12">
 
-      <div id="card" class="card text-white bg-success mr-3 mb-3" *ngFor="let usuario of usuariosS.usuarios">
+      <div id="card" class="card text-white bg-success mr-3 mb-3" *ngFor="let usuario of usuarios">
         <div class="card-header">
           <a routerLink="/usuarios/{{usuario._id}}">
             <img id="imagen_de_perfil" class="img-fluid rounded-circle mr-3" *ngIf="'assets/fotoPerfil/' + usuario._id + '.jpg'" [src]="'assets/fotoPerfil/' + usuario._id + '.jpg'" />
             <!-- <img id="imagen_de_perfil" class="img-fluid rounded-circle mr-3" *ngIf="!'assets/fotoPerfil/' + usuario._id + '.jpg'" [src]="'assets/fotoPerfil/noFotoPerfil.jpg'" /> -->
           </a>
-          <a class="text-white text-center" routerLink="/usuarios/{{usuario._id}}">{{usuario.nick}}</a>
+          <a class="text-white text-center" routerLink="/usuarios/{{usuario._id}}">@{{usuario.nick}}</a>
         </div>
         <div class="card-body">
           <h5 class="card-title">{{usuario.nombre}}</h5>

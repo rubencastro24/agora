@@ -1,0 +1,37 @@
+fechaHoy = new Date();
+fechaCumple = new Date(1999,2,3);
+
+/***************************************************************************************************/
+
+if ( fechaHoy.getMonth() > fechaCumple.getMonth() ||
+	 fechaHoy.getMonth() == fechaCumple.getMonth() && fechaHoy.getDate() >= fechaCumple.getDate() ){
+	edad1 = fechaHoy.getFullYear() - fechaCumple.getFullYear();
+}
+else{
+	edad1 = fechaHoy.getFullYear() - fechaCumple.getFullYear() - 1;
+}
+
+/***************************************************************************************************/
+
+if ( fechaHoy.getMonth() < fechaCumple.getMonth() ||
+	 fechaHoy.getMonth() == fechaCumple.getMonth() && fechaHoy.getDate() < fechaCumple.getDate() ){
+	edad2 = fechaHoy.getFullYear() - fechaCumple.getFullYear() - 1;
+}
+else{
+	edad2 = fechaHoy.getFullYear() - fechaCumple.getFullYear();
+}
+
+/***************************************************************************************************/
+
+edad3 = fechaHoy.getFullYear() - fechaCumple.getFullYear();
+
+if ( fechaHoy.getMonth() < fechaCumple.getMonth() ||
+	 fechaHoy.getMonth() == fechaCumple.getMonth() && fechaHoy.getDate() < fechaCumple.getDate() ){
+	edad3--;
+}
+
+/***************************************************************************************************/
+
+console.log(edad1);
+console.log(edad2);
+console.log(edad3);

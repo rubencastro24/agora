@@ -1,35 +1,44 @@
-db.usuarios.find({
-    _id: {
-        $in: [
-            db.seguimientos.find(
-                {
-                    usuario:ObjectId('5cf7f1d1ef57e531a0d433e4')
-                },
-                {
-                    sigue:1, _id:0
+/* --------- Subconsulta - seguidores de un usuario --------- */
+var usuario='5cf7f1d1ef57e531a0d433e4';
+
+var seguidoresId = db.seguimientos.find({sigue : ObjectId(usuario)},{_id:0,usuario:1}).map(function(seguidores) {return seguidores.usuario;});
+
+var seguidoresUsuarios = db.usuarios.find({_id: { $in : seguidoresId }},{nick:1});
+/* ---------------------------------------------------------- */
+
+
+/* ------------------------ All in!! ------------------------ */
+db.usuarios.find({_id: { $in : db.seguimientos.find({sigue : ObjectId('5cf7f1d1ef57e531a0d433e4')},{_id:0,usuario:1}).map(function(seguidores) {return seguidores.usuario;}) }},{nick:1});
+/* ---------------------------------------------------------- */
+
+
+/* ----------------------- Desbrosado ----------------------- */
+db
+    .usuarios
+        .find(
+            {
+                _id: {
+                    $in : db
+                        .seguimientos
+                            .find(
+                                {
+                                    sigue : ObjectId('5cf7f1d1ef57e531a0d433e4')
+                                },
+                                {
+                                    _id : 0,
+                                    usuario : 1
+                                }
+                            )
+                            .map(
+                                function(seguidores) {
+                                    return seguidores.usuario;
+                                }
+                            )
                 }
-            )
-        ]
-    }
-})
-
-db.usuarios.find({
-    _id: {
-        $in: [
-            ObjectId("5cf7f27eef57e531a0d433e5"),
-            ObjectId("5cf7fdf7a4d9df5354f6e81f"),
-            ObjectId("5cfc54b92988251234121e1b"),
-            ObjectId("5d02da3555f89a2a40f208db"),
-            ObjectId("5d03ece6ae0b7e23f8d94071")
-        ]
-    }
-})
-
-
-
-{ "sigue" : ObjectId("5cf7f27eef57e531a0d433e5") }
-{ "sigue" : ObjectId("5cf7fdf7a4d9df5354f6e81f") }
-{ "sigue" : ObjectId("5cfc54b92988251234121e1b") }
-{ "sigue" : ObjectId("5d02da3555f89a2a40f208db") }
-{ "sigue" : ObjectId("5d03ece6ae0b7e23f8d94071") }
-
+            },
+            {
+                nick : 1
+            }
+        )
+;
+/* ---------------------------------------------------------- */

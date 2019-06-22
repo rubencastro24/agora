@@ -27,9 +27,9 @@ export class IniciarSesionService {
   iniciarSesion(nick: string, pass: string): Observable<boolean> {
     return this.http.post<{token: string}>(this.URL_API + '/api/iniciar-sesion', {nick, pass})
       .pipe(
-        map(result => {
-          if (result.token){
-            localStorage.setItem('token', result.token);
+        map(resultado => {
+          if (resultado.token){
+            localStorage.setItem('token', resultado.token);
             return true;
           }
           return false;
@@ -40,9 +40,9 @@ export class IniciarSesionService {
   registrarse(nombre: string, apellidos: string, nick: string, pass: string, fechaCumple: {}): Observable<boolean> {
     return this.http.post<{token: string}>(this.URL_API + '/api/registrarse', {nombre, apellidos, nick, pass, fechaCumple})
       .pipe(
-        map(result => {
-          if (result.token){
-            localStorage.setItem('token', result.token);
+        map(resultado => {
+          if (resultado.token){
+            localStorage.setItem('token', resultado.token);
             return true;
           }
           return false;

@@ -21,7 +21,7 @@ export class UsuariosComponent implements OnInit{
   ) {
     this.ruta.params
       .subscribe(
-        params => {
+        (params) => {
           this.nick = params['nick'];
           this.buscarUsuariosQuery();
         }
@@ -40,7 +40,7 @@ export class UsuariosComponent implements OnInit{
         respuesta => {
           var resultado : any = respuesta;
           if (resultado.type == true){
-            this.usuariosS.usuarios = resultado.usuarios as Usuarios[];
+            this.usuarios = resultado.usuarios as Usuarios[];
           }
           else {
             console.log("no se encuentran usuarios.");
@@ -58,7 +58,7 @@ export class UsuariosComponent implements OnInit{
         respuesta => {
           var resultado : any = respuesta;
           if (resultado.type == true){
-            this.usuariosS.usuarios = resultado.usuarios as Usuarios[];
+            this.usuarios = resultado.usuarios as Usuarios[];
           }
           else {
             console.log("no se encuentran usuarios.");

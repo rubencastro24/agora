@@ -1,10 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+
+import { ActivatedRoute, Router } from '@angular/router';
+
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 import { UsuariosService } from '../../services/usuarios.service';
 import { SeguimientosService } from '../../services/seguimientos.service';
 import { IniciarSesionService } from '../../services/iniciar-sesion.service';
-import { Usuarios } from 'src/app/models/usuarios';
-import { Seguimientos } from 'src/app/models/seguimientos';
-import { ActivatedRoute, Router } from '@angular/router';
+
+import { Usuarios } from '../../models/usuarios';
+import { Seguimientos } from '../../models/seguimientos';
 
 @Component({
   selector: 'app-perfil',
@@ -14,32 +19,23 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class PerfilComponent implements OnInit {
 
+  
   public usuario : Usuarios[] = [];
-  public id : string;
-  public miId : string;
-
+  public id : Usuarios['_id'];
+  public miId : Usuarios['_id'];
+  
   public seguimiento : boolean;
-  public seguimientoObjeto : Seguimientos;
-
   public seguidor : boolean;
-  public seguidorObjeto : Seguimientos;
-  
-  public cambio : boolean;
-  public cambioMensaje : string;
-  
-  public seguimientos : boolean;
+  public cambioSeguimientoMensaje : string;
   public seguimientosObjeto : [];
   public seguimientosCantidad : number;
-  
-  public seguidores : boolean;
   public seguidoresObjeto : [];
   public seguidoresCantidad : number;
-
-  public seguidoresUsuarios : any;
 
 
   constructor(
     public usuarioS: UsuariosService,
+    public modalService: NgbModal,
     public sesionS: IniciarSesionService,
     public seguimientosS: SeguimientosService,
     public ruta : ActivatedRoute,
@@ -63,6 +59,13 @@ export class PerfilComponent implements OnInit {
   }
       
   ngOnInit() {
+  }
+
+  seguidoresModal(seguidores) {
+    this.modalService.open(seguidores, {backdropClass: 'bg-secondary' });
+  }
+  seguimientosModal(seguimientos) {
+    this.modalService.open(seguimientos, {backdropClass: 'bg-secondary' });
   }
 
   obtenerUsuario() {
@@ -98,7 +101,6 @@ export class PerfilComponent implements OnInit {
             }
             else {
               this.seguimiento = true;
-              this.seguimientoObjeto = resultado.data;
             }
           }
         },
@@ -122,7 +124,6 @@ export class PerfilComponent implements OnInit {
             }
             else {
               this.seguidor = true;
-              this.seguidorObjeto = resultado.data;
             }
           }
         },
@@ -142,11 +143,10 @@ export class PerfilComponent implements OnInit {
           }
           else {
             if (!resultado.cambio) {
-              this.cambio = false;
+              console.log("cambio de seguimiento nulo.");
             }
             else {
-              this.cambio = true;
-              this.cambioMensaje = resultado.status;
+              this.cambioSeguimientoMensaje = resultado.status;
               this.obtenerSeguimientoPerfil();
               this.obtenerSeguimientosPerfil();
               this.obtenerSeguidoresPerfil();
@@ -169,12 +169,10 @@ export class PerfilComponent implements OnInit {
           }
           else {
             if (!resultado.seguimientos) {
-              this.seguimientos = false;
+              console.log("error, seguimientos no encontrados")
             }
             else {
-              this.seguimientos = true;
               this.seguimientosObjeto = resultado.data;
-              console.log(this.seguimientosObjeto);
               this.seguimientosCantidad = resultado.data.length;
             }
           }
@@ -195,14 +193,11 @@ export class PerfilComponent implements OnInit {
           }
           else {
             if (!resultado.seguidores) {
-              this.seguidores = false;
+              console.log("error, seguidores no encontrados")
             }
             else {
-              this.seguidores = true;
               this.seguidoresObjeto = resultado.data;
-              console.log(this.seguidoresObjeto);
               this.seguidoresCantidad = resultado.data.length;
-              this.seguidoresNick();
             }
           }
         },
@@ -211,34 +206,4 @@ export class PerfilComponent implements OnInit {
         }
       );
   }
-
-  seguidoresNick() {
-    this.seguimientosS.SeguidoresNick(this.seguidoresObjeto)
-      .subscribe(
-        respuesta => {
-          var resultado : any = respuesta;
-          if (!resultado.type) {
-            console.log("error seguimiento.")
-          }
-          else {
-            if (!resultado.usuarios) {
-              this.seguidoresUsuarios = false;
-            }
-            else {
-              this.seguidoresUsuarios = resultado.data;
-            }
-            console.log(this.seguidoresUsuarios)
-          }
-        },
-        error => {
-          console.log(error);
-        }
-      );
-  }
-
-  seguimientosNick() {
-  }
-
-  
-
 }
